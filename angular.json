@@ -1,0 +1,156 @@
+{
+  "version": 1,
+  "projects": {
+    "school-gallery": {
+      "projectType": "application",
+      "root": "apps/school-gallery",
+      "sourceRoot": "apps/school-gallery/src",
+      "prefix": "ryanjerskine",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/school-gallery",
+            "index": "apps/school-gallery/src/index.html",
+            "main": "apps/school-gallery/src/main.ts",
+            "polyfills": "apps/school-gallery/src/polyfills.ts",
+            "tsConfig": "apps/school-gallery/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/school-gallery/src/favicon.ico",
+              "apps/school-gallery/src/assets"
+            ],
+            "styles": ["apps/school-gallery/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/school-gallery/src/environments/environment.ts",
+                  "with": "apps/school-gallery/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "school-gallery:build:production"
+            },
+            "development": {
+              "browserTarget": "school-gallery:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "school-gallery:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/school-gallery/src/**/*.ts",
+              "apps/school-gallery/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/school-gallery"],
+          "options": {
+            "jestConfig": "apps/school-gallery/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "school-gallery-e2e": {
+      "root": "apps/school-gallery-e2e",
+      "sourceRoot": "apps/school-gallery-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/school-gallery-e2e/cypress.json",
+            "devServerTarget": "school-gallery:serve:development",
+            "tsConfig": "apps/school-gallery-e2e/tsconfig.json"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "school-gallery:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/school-gallery-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular",
+    "packageManager": "npm"
+  },
+  "schematics": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "style": "scss",
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "defaultProject": "school-gallery"
+}
